@@ -2,20 +2,20 @@
 module.exports = (sequelize, DataTypes) => {
   const ContractItem = sequelize.define('ContractItem', {
     is_blueprint_copy: DataTypes.BOOLEAN,
-    is_included: DataTypes.BOOLEAN,
+    is_included: {type:DataTypes.BOOLEAN,allowNull: false,},
     item_id: DataTypes.BIGINT,
     material_efficiency: DataTypes.INTEGER,
-    quantitiy: DataTypes.INTEGER,
-    record_id: DataTypes.INTEGER,
+    quantitiy: {type:DataTypes.INTEGER,allowNull: false,},
+    record_id: {type:DataTypes.INTEGER,allowNull: false,},
     runs: DataTypes.INTEGER,
     time_efficiency: DataTypes.INTEGER,
-    type_id: DataTypes.INTEGER
-  }, {underscored: true});
-  ContractItem.associate = function(models) {
+    type_id: {type:DataTypes.INTEGER,allowNull: false,}
+  });
+  ContractItem.associate = (models) => {
     ContractItem.belongsTo(models.Contract, {
       foreignKey: 'contract_id',
       onDelete: 'CASCADE',
-      });   
+    });
   };
   return ContractItem;
 };

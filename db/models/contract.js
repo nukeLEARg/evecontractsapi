@@ -4,22 +4,24 @@ module.exports = (sequelize, DataTypes) => {
     buyout: DataTypes.DOUBLE,
     collateral: DataTypes.DOUBLE,
     contract_id: {type:DataTypes.INTEGER,allowNull: false,},
-    date_expired: DataTypes.DATE,
-    date_issued: DataTypes.DATE,
+    date_expired: {type:DataTypes.DATE,allowNull: false,},
+    date_issued: {type:DataTypes.DATE,allowNull: false,},
     days_to_complete: DataTypes.INTEGER,
     end_location_id: DataTypes.BIGINT,
     for_corporation: DataTypes.BOOLEAN,
-    issuer_corporation_id: DataTypes.INTEGER,
-    issuer_id: DataTypes.INTEGER,
+    issuer_corporation_id: {type:DataTypes.INTEGER,allowNull: false,},
+    issuer_id: {type:DataTypes.INTEGER,allowNull: false,},
     price: DataTypes.DOUBLE,
     reward: DataTypes.DOUBLE,
     start_location_id: DataTypes.BIGINT,
     title: DataTypes.STRING,
-    type: DataTypes.STRING,
+    type: {type:DataTypes.STRING,allowNull: false,},
     volume: DataTypes.DOUBLE
-  },{underscored: true});
-  Contract.associate = function(models) {
-    // associations can be defined here
+  });
+  Contract.associate = (models) => {
+    Contract.hasMany(models.ContractItem,{
+      foreignKey: 'contract_id'
+    });
   };
   return Contract;
 };

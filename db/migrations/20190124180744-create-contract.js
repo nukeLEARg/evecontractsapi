@@ -10,14 +10,15 @@ module.exports = {
       },
       contract_id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
       date_expired: {
+        allowNull: false,
         type: Sequelize.DATE
       },
       date_issued: {
+        allowNull: false,
         type: Sequelize.DATE
       },
       days_to_complete: {
@@ -30,9 +31,11 @@ module.exports = {
         type: Sequelize.BOOLEAN
       },
       issuer_corporation_id: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       issuer_id: {
+        allowNull: false,
         type: Sequelize.INTEGER
       },
       price: {
@@ -48,6 +51,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       type: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       volume: {
