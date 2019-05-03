@@ -2,16 +2,16 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Contracts', {
+      contract_id: {
+        allowNull: false,
+        primaryKey: true,
+        type: Sequelize.INTEGER
+      },
       buyout: {
         type: Sequelize.DOUBLE
       },
       collateral: {
         type: Sequelize.DOUBLE
-      },
-      contract_id: {
-        allowNull: false,
-        primaryKey: true,
-        type: Sequelize.INTEGER
       },
       date_expired: {
         allowNull: false,
@@ -64,6 +64,10 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      region_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER
       }
     });
   },

@@ -2,6 +2,12 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('ContractItems', {
+      id: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
+      },
       is_blueprint_copy: {
         type: Sequelize.BOOLEAN
       },

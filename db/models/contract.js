@@ -1,9 +1,9 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Contract = sequelize.define('Contract', {
+    contract_id: {type:DataTypes.INTEGER,allowNull: false,primaryKey: true,},
     buyout: DataTypes.DOUBLE,
     collateral: DataTypes.DOUBLE,
-    contract_id: {type:DataTypes.INTEGER,allowNull: false,},
     date_expired: {type:DataTypes.DATE,allowNull: false,},
     date_issued: {type:DataTypes.DATE,allowNull: false,},
     days_to_complete: DataTypes.INTEGER,
@@ -16,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
     start_location_id: DataTypes.BIGINT,
     title: DataTypes.STRING,
     type: {type:DataTypes.STRING,allowNull: false,},
-    volume: DataTypes.DOUBLE
+    volume: DataTypes.DOUBLE,
+    region_id: {type:DataTypes.INTEGER,allowNull: false,}
   });
   Contract.associate = (models) => {
     Contract.hasMany(models.ContractItem,{
