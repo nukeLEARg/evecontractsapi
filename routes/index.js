@@ -4,6 +4,6 @@ import ContractController from '../contractsController/contracts';
 const router = express.Router();
 
 router.get('/api/v0/contracts/:regionid', ContractController.getContractsRegion);
-router.post('/api/v0/contracts',ContractController.sendContracts);
+router.post('/api/v0/contracts',ContractController.addContracts);
 
 export default router;
