@@ -14,23 +14,10 @@ class ContractController {
                     message: 'contracts not found',
                 });
             }
-            /*var itemList = [];
-            contracts.forEach(element => {
-                models.contractitem.findAll({
-                    where: {
-                        contract_id: element.contract_id
-                    }
-                }).then((items) => {
-                    items.forEach(item =>{
-                        itemList.push(item);
-                    });
-                });
-            });*/
             return res.status(200).send({
                 success: 'true',
                 message: 'contracts retrived successfully',
                 contracts,
-               // itemList,
             });
         });
     }
