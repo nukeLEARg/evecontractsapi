@@ -30,7 +30,7 @@ class ContractController {
                     message: 'A contract with that id exists already', 
                     todoFound,
                 });
-            }          
+            }
             const contract = {
                 contract_id: req.body.contract_id,
                 buyout: req.body.buyout,
@@ -56,8 +56,26 @@ class ContractController {
                     message: 'contract added successfully',
                     Contract,
                 });
-            })
-        })
+            });
+        });
+    }
+
+    removeContracts(req,res){
+        models.Contract.findOne({where: {contract_id: req.body.contract_id}}).then((contractFound) => {
+            if(contractFound){
+                models.Contract.delete(contractFound).then((Contract) => {
+                    return res.status(201).send({
+                        success: 'true',
+                        message: 'contract removed successfully',
+                        Contract,
+                    });
+                });
+            }
+            return res.status(201).send({
+                success: 'true',
+                message: 'contract does not exist',
+            });
+        });
     }
 }
 const contractController = new ContractController();
