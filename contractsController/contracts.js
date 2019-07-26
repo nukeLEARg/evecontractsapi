@@ -28,7 +28,7 @@ class ContractController {
                 return res.status(403).send({
                     success: 'true',
                     message: 'A contract with that id exists already', 
-                    todoFound,
+                    contractFound,
                 });
             }
             const contract = {
@@ -61,9 +61,61 @@ class ContractController {
     }
 
     addContractsBatch(req,res){
-
+        const sent = parseInt(req.params.contractcount, 10);
+        var added = 0;
+        var promises = [];
+        for(var i = 0; i<req.body.contractArray.length; i++){
+            var contract = req.body.contractArray[i]
+            const contractz = {
+                contract_id: contract.contract_id,
+                buyout: contract.buyout,
+                collateral: contract.collateral,
+                date_expired: contract.date_expired,
+                date_issued: contract.date_issued,
+                days_to_complete: contract.days_to_complete,
+                end_location_id: contract.end_location_id,
+                for_corporation: contract.for_corporation,
+                issuer_corporation_id: contract.issuer_corporation_id,
+                issuer_id: contract.issuer_id,
+                price: contract.price,
+                reward: contract.reward,
+                start_location_id: contract.start_location_id,
+                title: contract.title,
+                type: contract.type,
+                volume: contract.volume,
+                region_id: contract.region_id,
+            };
+            promises.push(models.Contract.findOne({where: {contract_id: contractz.contract_id}}).then((contractFound) => {
+                if(contractFound){
+                    return res.status(403).send({
+                        success: 'true',
+                        message: 'A contract with that id exists already', 
+                        contractFound,
+                    });
+                }
+                else{
+                    models.Contract.create(contractz);
+                    added++
+                }
+            }));
+        }
+        Promise.all(promises).then(function(){
+            if(added == sent){
+                return res.status(201).send({
+                    success: 'true',
+                    message: 'contracts added successfully',
+                });
+            }
+            else{
+                return res.status(500).send({
+                    success: 'false',
+                    message: 'something went wrong idk',
+                });
+            }
+        });
+        
     }
-
+    
     removeContracts(req,res){
         const id = parseInt(req.params.contractid, 10);
         models.Contract.destroy({where: {contract_id: id}}).then((contractdeleted) => {

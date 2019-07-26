@@ -6,6 +6,6 @@ const router = express.Router();
 router.get('/api/v0/contracts/:regionid', ContractController.getContractsRegion);
 router.post('/api/v0/contracts',ContractController.addContracts);
 router.post('/api/v0/removecontract/:contractid',ContractController.removeContracts);
-router.post('/api/v0/contractsbatch/',ContractController.addContractsBatch);
+router.post('/api/v0/contractsbatch/:contractcount',ContractController.addContractsBatch);
 
 export default router;
