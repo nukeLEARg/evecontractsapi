@@ -61,14 +61,14 @@ class ContractController {
     }
 
     removeContracts(req,res){
-        models.Contract.findOne({where: {contract_id: req.body.contract_id}}).then((contractFound) => {
-            if(contractFound){
-                models.Contract.delete(contractFound).then((Contract) => {
-                    return res.status(201).send({
-                        success: 'true',
-                        message: 'contract removed successfully',
-                        Contract,
-                    });
+        const id = parseInt(req.params.contractid, 10);
+        models.Contract.destroy({where: {contract_id: id}}).then((contractdeleted) => {
+            if(contractdeleted === 1)
+            {
+                return res.status(201).send({
+                    success: 'true',
+                    message: 'contract removed successfully',
+                    contractdeleted,
                 });
             }
             return res.status(201).send({
