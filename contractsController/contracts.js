@@ -60,6 +60,10 @@ class ContractController {
         });
     }
 
+    addContractsBatch(req,res){
+
+    }
+
     removeContracts(req,res){
         const id = parseInt(req.params.contractid, 10);
         models.Contract.destroy({where: {contract_id: id}}).then((contractdeleted) => {
@@ -71,7 +75,7 @@ class ContractController {
                     contractdeleted,
                 });
             }
-            return res.status(201).send({
+            return res.status(404).send({
                 success: 'true',
                 message: 'contract does not exist',
             });
