@@ -22,6 +22,26 @@ class ContractController {
         });
     }
 
+    getContractsType(req, res) {
+        models.Contract.findAll({
+            where: {
+                type: req.params.type
+            }
+        }).then((contracts) => {
+            if(!contracts){
+                return res.status(404).send({
+                    success: 'false',
+                    message: 'contracts not found',
+                });
+            }
+            return res.status(200).send({
+                success: 'true',
+                message: 'contracts retrived successfully',
+                contracts,
+            });
+        });
+    }
+
     addContracts(req,res){
         models.Contract.findOne({where: {contract_id: req.body.contract_id}}).then((contractFound) => {
             if(contractFound){
