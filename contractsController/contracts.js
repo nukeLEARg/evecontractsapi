@@ -1,4 +1,6 @@
 import models, { sequelize } from '../db/models';
+import Sequelize from 'Sequelize';
+const Op = Sequelize.Op
 
 class ContractController {
     getContractsRegion(req, res) {
@@ -23,10 +25,54 @@ class ContractController {
     }
 
     getContractsType(req, res) {
+        var whereStat = {};
+        if(req.params.regionid){
+            whereStat.type = req.params.type;
+            whereStat.region_id = req.params.regionid;
+        }
+        else{
+            whereStat.type = req.params.type;
+        }
         models.Contract.findAll({
-            where: {
-                type: req.params.type
+            where: whereStat
+        }).then((contracts) => {
+            if(!contracts){
+                return res.status(404).send({
+                    success: 'false',
+                    message: 'contracts not found',
+                });
             }
+            return res.status(200).send({
+                success: 'true',
+                message: 'contracts retrived successfully',
+                contracts,
+            });
+        });
+    }
+
+    getContractsPrice(req, res) {
+        const min = parseInt(req.params.min, 10);
+        const max = parseInt(req.params.max, 10);
+        var whereStat = {};
+        if(req.params.regionid){
+            whereStat.price = {
+                [Op.and]: {
+                    [Op.gte]: min, 
+                    [Op.lte]: max,
+                }
+            };
+            whereStat.region_id = req.params.regionid;
+        }
+        else{
+            whereStat.price = {
+                [Op.and]: {
+                    [Op.gte]: min, 
+                    [Op.lte]: max,
+                }
+            };
+        }
+        models.Contract.findAll({
+            where: whereStat
         }).then((contracts) => {
             if(!contracts){
                 return res.status(404).send({
