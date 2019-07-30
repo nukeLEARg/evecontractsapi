@@ -88,22 +88,22 @@ class ContractController {
             var contract = req.body.contractArray[i]
             const contractz = {
                 contract_id: contract.contract_id,
-                buyout: contract.buyout || null,
-                collateral: contract.collateral || null,
+                buyout: contract.buyout,
+                collateral: contract.collateral,
                 date_expired: contract.date_expired,
                 date_issued: contract.date_issued,
-                days_to_complete: contract.days_to_complete || null,
-                end_location_id: contract.end_location_id || null,
-                for_corporation: contract.for_corporation || null,
+                days_to_complete: contract.days_to_complete,
+                end_location_id: contract.end_location_id,
+                for_corporation: contract.for_corporation,
                 issuer_corporation_id: contract.issuer_corporation_id,
                 issuer_id: contract.issuer_id,
-                price: contract.price || null,
-                reward: contract.reward || null,
-                start_location_id: contract.start_location_id || null,
-                title: contract.title || null,
+                price: contract.price,
+                reward: contract.reward,
+                start_location_id: contract.start_location_id,
+                title: contract.title,
                 type: contract.type,
-                volume: contract.volume || null,
-                region_id: contract.region_id || 10000002,
+                volume: contract.volume,
+                region_id: contract.region_id || req.params.regionid,
             };
             promises.push(models.Contract.findOne({where: {contract_id: contractz.contract_id}}).then((contractFound) => {
                 if(contractFound){
