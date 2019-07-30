@@ -81,29 +81,29 @@ class ContractController {
     }
 
     addContractsBatch(req,res){
-        const sent = parseInt(req.params.contractcount, 10);
+        const sent = req.body.contractArray.length;
         var added = 0;
         var promises = [];
         for(var i = 0; i<req.body.contractArray.length; i++){
             var contract = req.body.contractArray[i]
             const contractz = {
                 contract_id: contract.contract_id,
-                buyout: contract.buyout,
-                collateral: contract.collateral,
+                buyout: contract.buyout || null,
+                collateral: contract.collateral || null,
                 date_expired: contract.date_expired,
                 date_issued: contract.date_issued,
-                days_to_complete: contract.days_to_complete,
-                end_location_id: contract.end_location_id,
-                for_corporation: contract.for_corporation,
+                days_to_complete: contract.days_to_complete || null,
+                end_location_id: contract.end_location_id || null,
+                for_corporation: contract.for_corporation || null,
                 issuer_corporation_id: contract.issuer_corporation_id,
                 issuer_id: contract.issuer_id,
-                price: contract.price,
-                reward: contract.reward,
-                start_location_id: contract.start_location_id,
-                title: contract.title,
+                price: contract.price || null,
+                reward: contract.reward || null,
+                start_location_id: contract.start_location_id || null,
+                title: contract.title || null,
                 type: contract.type,
-                volume: contract.volume,
-                region_id: contract.region_id,
+                volume: contract.volume || null,
+                region_id: contract.region_id || 10000002,
             };
             promises.push(models.Contract.findOne({where: {contract_id: contractz.contract_id}}).then((contractFound) => {
                 if(contractFound){
@@ -123,10 +123,11 @@ class ContractController {
             if(added == sent){
                 return res.status(201).send({
                     success: 'true',
-                    message: 'contracts added successfully',
+                    message: 'contracts added successfully' + sent,
                 });
             }
             else{
+                console.log("promises:"+promises.length+" added contracts:"+added+" sent:"+sent)
                 return res.status(500).send({
                     success: 'false',
                     message: 'something went wrong idk',
