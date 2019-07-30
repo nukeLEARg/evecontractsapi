@@ -18,7 +18,7 @@ class ContractController {
             }
             return res.status(200).send({
                 success: 'true',
-                message: 'contracts retrived successfully',
+                message: contracts.length+' contracts retrived successfully',
                 contracts,
             });
         });
@@ -44,7 +44,7 @@ class ContractController {
             }
             return res.status(200).send({
                 success: 'true',
-                message: 'contracts retrived successfully',
+                message: contracts.length+' contracts retrived successfully',
                 contracts,
             });
         });
@@ -82,7 +82,7 @@ class ContractController {
             }
             return res.status(200).send({
                 success: 'true',
-                message: 'contracts retrived successfully',
+                message: contracts.length+' contracts retrived successfully',
                 contracts,
             });
         });
@@ -169,7 +169,7 @@ class ContractController {
             if(added == sent){
                 return res.status(201).send({
                     success: 'true',
-                    message: 'contracts added successfully' + sent,
+                    message: sent+' contracts added successfully',
                 });
             }
             else{
