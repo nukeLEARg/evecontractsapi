@@ -49,6 +49,45 @@ class ContractController {
             });
         });
     }
+    
+    getContractsItem(req, res) {
+        var contractIds = []
+        models.ContractItem.findAll({
+            where: {item_id: req.params.itemid,},
+        }).then((itemsFound) => {
+            if(itemsFound){
+                for(var i = 0; i < itemsFound.length; i++){
+                    contractIds.push(itemsFound[i].contract_id);
+                }
+                var whereStat = {};
+                if(contractIds.length > 1){
+                    whereStat.contract_id = {
+                        [Op.any]: contractIds,
+                    };
+                }
+                else{
+                    whereStat.contract_id = contractIds[0];
+                }
+                models.Contract.findAll({
+                    where: whereStat,
+                }).then((contractsFound) => {
+                    if(contractsFound){
+                        return res.status(200).send({
+                            success: 'true',
+                            message: contractsFound.length + ' contracts retrived successfully',
+                            contractsFound,
+                        });
+                    }
+                    else{
+                        return res.status(404).send({
+                            success: 'false',
+                            message: 'contracts not found',
+                        });
+                    }
+                });
+            }
+        });
+    }
 
     getContractsPrice(req, res) {
         const min = parseInt(req.params.min, 10);
