@@ -53,7 +53,7 @@ class ContractController {
     getContractsItem(req, res) {
         var contractIds = []
         models.ContractItem.findAll({
-            where: {item_id: req.params.itemid,},
+            where: {type_id: req.params.itemid,},
         }).then((itemsFound) => {
             if(itemsFound){
                 for(var i = 0; i < itemsFound.length; i++){
@@ -67,6 +67,9 @@ class ContractController {
                 }
                 else{
                     whereStat.contract_id = contractIds[0];
+                }
+                if(req.params.regionid){
+                    whereStat.region_id = req.params.regionid;
                 }
                 models.Contract.findAll({
                     where: whereStat,
