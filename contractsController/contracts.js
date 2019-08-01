@@ -88,39 +88,32 @@ class ContractController {
         });
     }
 
-    addContracts(req,res){
-        models.Contract.findOne({where: {contract_id: req.body.contract_id,},}).then((contractFound) => {
-            if(contractFound){
+    addItem(req,res){
+        models.ContractItem.findOne({where: {record_id: req.body.record_id,},}).then((contractItemFound) => {
+            if(contractItemFound){
                 return res.status(403).send({
                     success: 'true',
-                    message: 'A contract with that id exists already', 
-                    contractFound,
+                    message: 'An item with that id exists already', 
+                    contractItemFound,
                 });
             }
-            const contract = {
-                contract_id: req.body.contract_id,
-                buyout: req.body.buyout,
-                collateral: req.body.collateral,
-                date_expired:req.body.date_expired,
-                date_issued: req.body.date_issued,
-                days_to_complete: req.body.days_to_complete,
-                end_location_id: req.body.end_location_id,
-                for_corporation: req.body.for_corporation,
-                issuer_corporation_id: req.body.issuer_corporation_id,
-                issuer_id: req.body.issuer_id,
-                price: req.body.price,
-                reward: req.body.reward,
-                start_location_id: req.body.start_location_id,
-                title: req.body.title,
-                type: req.body.type,
-                volume: req.body.volume,
-                region_id: req.body.region_id,
+            const contractItem = {
+                is_blueprint_copy: req.body.is_blueprint_copy,
+                is_included: req.body.is_included,
+                item_id: req.body.item_id,
+                material_efficiency: req.body.material_efficiency,
+                quantitiy: req.body.quantitiy,
+                record_id: req.body.record_id,
+                runs: req.body.runs,
+                time_efficiency: req.body.time_efficiency,
+                type_id: req.body.type_id,
+                contract_id: req.body.contract_id || req.params.contractId,
             };
-            models.Contract.create(contract).then((Contract) => {
+            models.ContractItem.create(contractItem).then((ContractItem) => {
                 return res.status(201).send({
                     success: 'true',
-                    message: 'contract added successfully',
-                    Contract,
+                    message: 'item added successfully',
+                    ContractItem,
                 });
             });
         });
