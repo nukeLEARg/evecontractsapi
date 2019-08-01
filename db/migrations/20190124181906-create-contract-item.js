@@ -21,14 +21,14 @@ module.exports = {
       material_efficiency: {
         type: Sequelize.INTEGER,
       },
-      quantitiy: {
+      quantity: {
         allowNull: false,
         type: Sequelize.INTEGER,
       },
       record_id: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        type: Sequelize.BIGINT,
       },
       runs: {
         type: Sequelize.INTEGER,

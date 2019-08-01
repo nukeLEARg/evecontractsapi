@@ -89,33 +89,51 @@ class ContractController {
     }
 
     addItem(req,res){
-        models.ContractItem.findOne({where: {record_id: req.body.record_id,},}).then((contractItemFound) => {
-            if(contractItemFound){
-                return res.status(403).send({
-                    success: 'true',
-                    message: 'An item with that id exists already', 
-                    contractItemFound,
-                });
+        const sent = req.body.itemArray.length;
+        var added = 0;
+        var promises = [];
+        for(var i = 0; i < req.body.itemArray.length; i++){
+            var contractItem = req.body.itemArray[i]
+            const contractItemz = {
+                is_blueprint_copy: contractItem.is_blueprint_copy,
+                is_included: contractItem.is_included,
+                item_id: contractItem.item_id,
+                material_efficiency: contractItem.material_efficiency,
+                quantity: contractItem.quantity,
+                record_id: contractItem.record_id,
+                runs: contractItem.runs,
+                time_efficiency: contractItem.time_efficiency,
+                type_id: contractItem.type_id,
+                contract_id: contractItem.contract_id || req.params.contractId,
             }
-            const contractItem = {
-                is_blueprint_copy: req.body.is_blueprint_copy,
-                is_included: req.body.is_included,
-                item_id: req.body.item_id,
-                material_efficiency: req.body.material_efficiency,
-                quantitiy: req.body.quantitiy,
-                record_id: req.body.record_id,
-                runs: req.body.runs,
-                time_efficiency: req.body.time_efficiency,
-                type_id: req.body.type_id,
-                contract_id: req.body.contract_id || req.params.contractId,
-            };
-            models.ContractItem.create(contractItem).then((ContractItem) => {
+            promises.push(models.ContractItem.findOne({where: {contract_id: contractItemz.contract_id,},}).then((contractItemFound) => {
+                if(contractItemFound){
+                    return res.status(403).send({
+                        success: 'true',
+                        message: 'An item with that id exists already', 
+                        contractItemFound,
+                    });
+                }
+                else{
+                    models.ContractItem.create(contractItemz);
+                    added++
+                }
+            }));
+        }
+        Promise.all(promises).then(function(){
+            if(added === sent){
                 return res.status(201).send({
                     success: 'true',
-                    message: 'item added successfully',
-                    ContractItem,
+                    message: sent + ' items added successfully',
                 });
-            });
+            }
+            else{
+                console.log("promises:" + promises.length + " added items:" + added + " sent:" + sent)
+                return res.status(500).send({
+                    success: 'false',
+                    message: 'something went wrong idk',
+                });
+            }
         });
     }
 
