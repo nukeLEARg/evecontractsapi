@@ -6,8 +6,8 @@ import router from './routes/index.js';
 const app = express();
 
 // Parse incoming requests data
-app.use(bodyParser.json({limit: '1mb'}));
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({limit: '1mb',}));
+app.use(bodyParser.urlencoded({extended: false,}));
 app.use(router);
 
 const PORT = 5000;

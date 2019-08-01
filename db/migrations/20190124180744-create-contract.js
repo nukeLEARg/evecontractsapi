@@ -5,73 +5,73 @@ module.exports = {
       contract_id: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       buyout: {
-        type: Sequelize.DOUBLE
+        type: Sequelize.DOUBLE,
       },
       collateral: {
-        type: Sequelize.DOUBLE
+        type: Sequelize.DOUBLE,
       },
       date_expired: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       date_issued: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       days_to_complete: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       end_location_id: {
-        type: Sequelize.BIGINT
+        type: Sequelize.BIGINT,
       },
       for_corporation: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
       },
       issuer_corporation_id: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       issuer_id: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       price: {
-        type: Sequelize.DOUBLE
+        type: Sequelize.DOUBLE,
       },
       reward: {
-        type: Sequelize.DOUBLE
+        type: Sequelize.DOUBLE,
       },
       start_location_id: {
-        type: Sequelize.BIGINT
+        type: Sequelize.BIGINT,
       },
       title: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       type: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
       },
       volume: {
-        type: Sequelize.DOUBLE
+        type: Sequelize.DOUBLE,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       region_id: {
         allowNull: false,
-        type: Sequelize.INTEGER
-      }
+        type: Sequelize.INTEGER,
+      },
     });
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('Contracts');
-  }
+  },
 };

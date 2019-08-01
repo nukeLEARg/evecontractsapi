@@ -1,5 +1,5 @@
 'use strict';
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const Contract = sequelize.define('Contract', {
     contract_id: {type:DataTypes.INTEGER,allowNull: false,primaryKey: true,},
     buyout: DataTypes.DOUBLE,
@@ -17,11 +17,11 @@ module.exports = (sequelize, DataTypes) => {
     title: DataTypes.STRING,
     type: {type:DataTypes.STRING,allowNull: false,},
     volume: DataTypes.DOUBLE,
-    region_id: {type:DataTypes.INTEGER,allowNull: false,}
+    region_id: {type:DataTypes.INTEGER,allowNull: false,},
   });
   Contract.associate = (models) => {
     Contract.hasMany(models.ContractItem,{
-      foreignKey: 'contract_id'
+      foreignKey: 'contract_id',
     });
   };
   return Contract;

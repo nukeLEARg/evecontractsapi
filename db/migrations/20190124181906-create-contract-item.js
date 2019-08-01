@@ -6,47 +6,47 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       is_blueprint_copy: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
       },
       is_included: {
         allowNull: false,
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
       },
       item_id: {
-        type: Sequelize.BIGINT
+        type: Sequelize.BIGINT,
       },
       material_efficiency: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
-      quantitiy: {
+      quantity: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       record_id: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.BIGINT,
       },
       runs: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       time_efficiency: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       type_id: {
         allowNull: false,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       },
       contract_id: {
         type: Sequelize.INTEGER,
@@ -61,5 +61,5 @@ module.exports = {
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('ContractItems');
-  }
+  },
 };
