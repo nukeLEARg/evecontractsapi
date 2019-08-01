@@ -1,4 +1,4 @@
-import models, { sequelize } from '../db/models';
+import models from '../db/models';
 import Sequelize from 'Sequelize';
 const Op = Sequelize.Op
 
@@ -7,8 +7,8 @@ class ContractController {
         const id = parseInt(req.params.regionid, 10);
         models.Contract.findAll({
             where: {
-                region_id: id
-            }
+                region_id: id,
+            },
         }).then((contracts) => {
             if(!contracts){
                 return res.status(404).send({
@@ -18,7 +18,7 @@ class ContractController {
             }
             return res.status(200).send({
                 success: 'true',
-                message: contracts.length+' contracts retrived successfully',
+                message: contracts.length + ' contracts retrived successfully',
                 contracts,
             });
         });
@@ -34,7 +34,7 @@ class ContractController {
             whereStat.type = req.params.type;
         }
         models.Contract.findAll({
-            where: whereStat
+            where: whereStat,
         }).then((contracts) => {
             if(!contracts){
                 return res.status(404).send({
@@ -44,7 +44,7 @@ class ContractController {
             }
             return res.status(200).send({
                 success: 'true',
-                message: contracts.length+' contracts retrived successfully',
+                message: contracts.length + ' contracts retrived successfully',
                 contracts,
             });
         });
@@ -59,7 +59,7 @@ class ContractController {
                 [Op.and]: {
                     [Op.gte]: min, 
                     [Op.lte]: max,
-                }
+                },
             };
             whereStat.region_id = req.params.regionid;
         }
@@ -68,11 +68,11 @@ class ContractController {
                 [Op.and]: {
                     [Op.gte]: min, 
                     [Op.lte]: max,
-                }
+                },
             };
         }
         models.Contract.findAll({
-            where: whereStat
+            where: whereStat,
         }).then((contracts) => {
             if(!contracts){
                 return res.status(404).send({
@@ -82,14 +82,14 @@ class ContractController {
             }
             return res.status(200).send({
                 success: 'true',
-                message: contracts.length+' contracts retrived successfully',
+                message: contracts.length + ' contracts retrived successfully',
                 contracts,
             });
         });
     }
 
     addContracts(req,res){
-        models.Contract.findOne({where: {contract_id: req.body.contract_id}}).then((contractFound) => {
+        models.Contract.findOne({where: {contract_id: req.body.contract_id,},}).then((contractFound) => {
             if(contractFound){
                 return res.status(403).send({
                     success: 'true',
@@ -130,7 +130,7 @@ class ContractController {
         const sent = req.body.contractArray.length;
         var added = 0;
         var promises = [];
-        for(var i = 0; i<req.body.contractArray.length; i++){
+        for(var i = 0; i < req.body.contractArray.length; i++){
             var contract = req.body.contractArray[i]
             const contractz = {
                 contract_id: contract.contract_id,
@@ -151,7 +151,7 @@ class ContractController {
                 volume: contract.volume,
                 region_id: contract.region_id || req.params.regionid,
             };
-            promises.push(models.Contract.findOne({where: {contract_id: contractz.contract_id}}).then((contractFound) => {
+            promises.push(models.Contract.findOne({where: {contract_id: contractz.contract_id,},}).then((contractFound) => {
                 if(contractFound){
                     return res.status(403).send({
                         success: 'true',
@@ -166,14 +166,14 @@ class ContractController {
             }));
         }
         Promise.all(promises).then(function(){
-            if(added == sent){
+            if(added === sent){
                 return res.status(201).send({
                     success: 'true',
-                    message: sent+' contracts added successfully',
+                    message: sent + ' contracts added successfully',
                 });
             }
             else{
-                console.log("promises:"+promises.length+" added contracts:"+added+" sent:"+sent)
+                console.log("promises:" + promises.length + " added contracts:" + added + " sent:" + sent)
                 return res.status(500).send({
                     success: 'false',
                     message: 'something went wrong idk',
@@ -185,9 +185,8 @@ class ContractController {
     
     removeContracts(req,res){
         const id = parseInt(req.params.contractid, 10);
-        models.Contract.destroy({where: {contract_id: id}}).then((contractdeleted) => {
-            if(contractdeleted === 1)
-            {
+        models.Contract.destroy({where: {contract_id: id,},}).then((contractdeleted) => {
+            if(contractdeleted === 1) {
                 return res.status(201).send({
                     success: 'true',
                     message: 'contract removed successfully',

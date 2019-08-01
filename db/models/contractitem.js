@@ -1,5 +1,5 @@
 'use strict';
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const ContractItem = sequelize.define('ContractItem', {
     is_blueprint_copy: DataTypes.BOOLEAN,
     is_included: {type:DataTypes.BOOLEAN,allowNull: false,},
@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     record_id: {type:DataTypes.INTEGER,allowNull: false,},
     runs: DataTypes.INTEGER,
     time_efficiency: DataTypes.INTEGER,
-    type_id: {type:DataTypes.INTEGER,allowNull: false,}
+    type_id: {type:DataTypes.INTEGER,allowNull: false,},
   });
   ContractItem.associate = (models) => {
     ContractItem.belongsTo(models.Contract, {
